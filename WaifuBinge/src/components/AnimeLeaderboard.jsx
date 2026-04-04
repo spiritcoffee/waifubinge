@@ -61,7 +61,7 @@ export default function AnimeLeaderboard() {
     <aside className="w-[380px] shrink-0 hidden xl:flex flex-col gap-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-card border border-border rounded-tl-xl border-b-0">
-        <Trophy className="w-4 h-4 text-yellow-400" />
+        <Trophy className="w-4 h-4 text-yellow-400 icon-glow-sm" />
         <h3 className="text-sm font-bold text-foreground tracking-wide uppercase">Top Leaderboard</h3>
         <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0">
           <TrendingUp className="w-2.5 h-2.5 mr-1" />
@@ -131,11 +131,6 @@ export default function AnimeLeaderboard() {
           </ol>
         )}
       </div>
-
-      {/* Footer note */}
-      <p className="text-[10px] text-muted-foreground text-center mt-2 px-2">
-        Powered by Jikan · Updates every 10 min
-      </p>
     </aside>
   )
 }

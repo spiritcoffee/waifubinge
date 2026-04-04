@@ -18,11 +18,15 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 }
 
+import { Smile } from 'lucide-react'
+
 function MoodSelector({ activeMood, onMoodSelect }) {
   return (
     <section className="w-full">
       <div className="mb-4 flex items-center gap-3">
-        <h2 className="text-xl font-bold text-foreground">🎭 How are you feeling?</h2>
+        <h2 className="text-xl font-bold flex items-center gap-2 text-foreground">
+          <Smile className="w-6 h-6 text-primary icon-glow" /> How are you feeling?
+        </h2>
         {activeMood && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
@@ -71,7 +75,9 @@ function MoodSelector({ activeMood, onMoodSelect }) {
                 />
               )}
 
-              <span className="text-2xl leading-none">{mood.emoji}</span>
+              <div className="w-8 h-8 flex items-center justify-center mb-1">
+                <mood.icon className="w-6 h-6 icon-glow transition-all duration-300" />
+              </div>
               <span className="text-xs font-semibold leading-tight">{mood.name}</span>
               <span
                 className={cn(

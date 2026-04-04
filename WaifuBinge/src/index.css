@@ -112,3 +112,16 @@ body {
 .glow-purple:hover {
   box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
 }
+
+/* Icon glow effects */
+.icon-glow {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.icon-glow-sm {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.icon-glow-lg {
+  filter: drop-shadow(0 0 12px currentColor);
+}
