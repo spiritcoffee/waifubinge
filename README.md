@@ -4,6 +4,9 @@ Welcome to the Development Sprint. In this 2-hour team-based event, you will bui
 
 This challenge evaluates your team's ability to rapidly prototype, effectively utilize a modern JavaScript/React ecosystem, and seamlessly integrate external APIs to build a compelling user interface.
 
+**Below are listed libraries and Public APIs you can use.**
+**You must only use the given libraries, however you can use additional APIs for more functionality.**
+
 ## 🏆 Judging Criteria
 
 Submissions will be evaluated on the following metrics:
