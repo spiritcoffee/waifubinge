@@ -56,11 +56,11 @@ function MangaDetails() {
 
   const handleWatchlist = () => {
     if (inWatchlist) {
-      removeFromWatchlist(manga.mal_id, 'manga')
-      toast.info(`Removed "${manga.title}" from watchlist`, { icon: '🗑️' })
+      removeFromWatchlist(manga.mal_id)
+      toast.info(`Removed "${manga.title}" from readlist`, { icon: '🗑️' })
     } else {
-      addToWatchlist(manga, 'manga')
-      toast.success(`Added "${manga.title}" to watchlist!`, { icon: '✅' })
+      addToWatchlist(manga)
+      toast.success(`Added "${manga.title}" to readlist!`, { icon: '✅' })
     }
   }
 
@@ -131,9 +131,9 @@ function MangaDetails() {
                 className={cn("w-full gap-2 font-semibold transition-all", inWatchlist ? "bg-secondary text-secondary-foreground" : "")}
               >
                 {inWatchlist ? (
-                  <><BookmarkCheck className="w-5 h-5" /> In Watchlist</>
+                  <><BookmarkCheck className="w-5 h-5" /> In Readlist</>
                 ) : (
-                  <><Bookmark className="w-5 h-5" /> Add to Watchlist</>
+                  <><Bookmark className="w-5 h-5" /> Add to Readlist</>
                 )}
               </Button>
             </motion.div>

@@ -122,7 +122,7 @@ function Navbar({ searchQuery, onSearchChange }) {
                 className="relative hidden sm:flex items-center gap-2"
               >
                 <Bookmark className="w-4 h-4" />
-                <span>Watchlist</span>
+                <span>{location.pathname.startsWith('/manga') ? 'Readlist' : 'Watchlist'}</span>
                 {watchlist.length > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}

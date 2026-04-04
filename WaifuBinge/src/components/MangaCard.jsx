@@ -15,13 +15,13 @@ function MangaCard({ manga }) {
     e.preventDefault()
     e.stopPropagation()
     if (inWatchlist) {
-      removeFromWatchlist(manga.mal_id, 'manga')
-      toast.info(`Removed "${manga.title}" from watchlist`, {
+      removeFromWatchlist(manga.mal_id)
+      toast.info(`Removed "${manga.title}" from readlist`, {
         icon: '🗑️',
       })
     } else {
-      addToWatchlist(manga, 'manga')
-      toast.success(`Added "${manga.title}" to watchlist!`, {
+      addToWatchlist(manga)
+      toast.success(`Added "${manga.title}" to readlist!`, {
         icon: '✅',
       })
     }
@@ -93,7 +93,7 @@ function MangaCard({ manga }) {
               : 'bg-black/70 border-border text-muted-foreground hover:border-primary hover:text-primary',
             'opacity-0 group-hover:opacity-100'
           )}
-          title={inWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
+          title={inWatchlist ? 'Remove from readlist' : 'Add to readlist'}
         >
           {inWatchlist ? (
             <BookmarkCheck className="w-4 h-4" />

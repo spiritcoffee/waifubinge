@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, TrendingUp, AlertCircle, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Sparkles, TrendingUp, AlertCircle, RefreshCw, ChevronLeft, ChevronRight, Flame } from 'lucide-react'
 import MangaCard from '@/components/MangaCard'
 import MoodSelector from '@/components/MoodSelector'
 import { LoadingGrid } from '@/components/LoadingSkeleton'
+import MangaLeaderboard from '@/components/MangaLeaderboard'
 import { Button } from '@/components/ui/button'
 import { useTopManga, useMangaByMood } from '@/hooks/useManga'
 import { useSearchManga } from '@/hooks/useSearch'
@@ -113,12 +114,24 @@ function Manga({ searchQuery }) {
   // Section heading
   const sectionTitle = useMemo(() => {
     if (isSearchMode) return `Search: "${query}"`
-    if (activeMood) return `${MOOD_GENRES[activeMood].emoji} ${MOOD_GENRES[activeMood].name} Vibes`
-    return '🔥 Top Manga'
+    if (activeMood) {
+      const Icon = MOOD_GENRES[activeMood].icon
+      return (
+        <span className="flex items-center gap-2">
+          <Icon className="w-5 h-5 icon-glow" />
+          {MOOD_GENRES[activeMood].name} Vibes
+        </span>
+      )
+    }
+    return (
+      <span className="flex items-center gap-2">
+        <Flame className="w-5 h-5 text-orange-500 icon-glow" /> Top Manga
+      </span>
+    )
   }, [isSearchMode, query, activeMood])
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 xl:pr-0 py-8">
       <div className="flex gap-5 items-start">
         {/* Main content */}
         <main className="flex-1 min-w-0 flex flex-col gap-10">
@@ -214,6 +227,9 @@ function Manga({ searchQuery }) {
             )}
           </section>
         </main>
+
+        {/* Right Sidebar — Leaderboard */}
+        <MangaLeaderboard />
       </div>
     </div>
   )
