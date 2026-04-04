@@ -53,3 +53,50 @@ export async function fetchAnimeById(id) {
   const { data } = await api.get(`/anime/${id}`)
   return data
 }
+
+/**
+ * Fetch top manga
+ * @param {number} page
+ * @param {number} limit
+ */
+export async function fetchTopManga(page = 1, limit = 24) {
+  const { data } = await api.get('/top/manga', {
+    params: { page, limit },
+  })
+  return data
+}
+
+/**
+ * Search manga by query string
+ * @param {string} query
+ * @param {number} page
+ * @param {number} limit
+ */
+export async function searchManga(query, page = 1, limit = 24) {
+  const { data } = await api.get('/manga', {
+    params: { q: query, page, limit, sfw: true },
+  })
+  return data
+}
+
+/**
+ * Fetch manga by genre(s)
+ * @param {number|string} genreIds - comma-separated genre IDs
+ * @param {number} page
+ * @param {number} limit
+ */
+export async function fetchMangaByGenre(genreIds, page = 1, limit = 24) {
+  const { data } = await api.get('/manga', {
+    params: { genres: genreIds, page, limit, sfw: true, order_by: 'score', sort: 'desc' },
+  })
+  return data
+}
+
+/**
+ * Fetch a single manga by its MAL ID
+ * @param {number} id
+ */
+export async function fetchMangaById(id) {
+  const { data } = await api.get(`/manga/${id}`)
+  return data
+}

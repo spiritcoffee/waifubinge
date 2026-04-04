@@ -5,11 +5,17 @@ import Home from './pages/Home'
 import Manga from './pages/Manga'
 import Watchlist from './pages/Watchlist'
 import AnimeDetails from './pages/AnimeDetails'
+import MangaDetails from './pages/MangaDetails'
 
 // Wrapper to pass searchQuery from Layout context into Home
 function HomeWithContext() {
   const { searchQuery } = useOutletContext()
   return <Home searchQuery={searchQuery} />
+}
+
+function MangaWithContext() {
+  const { searchQuery } = useOutletContext()
+  return <Manga searchQuery={searchQuery} />
 }
 
 function App() {
@@ -20,7 +26,8 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/anime" element={<HomeWithContext />} />
           <Route path="/anime/:id" element={<AnimeDetails />} />
-          <Route path="/manga" element={<Manga />} />
+          <Route path="/manga" element={<MangaWithContext />} />
+          <Route path="/manga/:id" element={<MangaDetails />} />
           <Route path="/watchlist" element={<Watchlist />} />
         </Route>
       </Routes>

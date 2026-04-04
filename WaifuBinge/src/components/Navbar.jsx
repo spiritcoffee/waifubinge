@@ -16,8 +16,9 @@ function Navbar({ searchQuery, onSearchChange }) {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
-    if (location.pathname !== '/' && searchQuery.trim().length > 0) {
-      navigate('/')
+    const targetPath = location.pathname.startsWith('/manga') ? '/manga' : '/anime'
+    if (location.pathname !== targetPath && searchQuery.trim().length > 0) {
+      navigate(targetPath)
     }
   }
 
@@ -30,19 +31,37 @@ function Navbar({ searchQuery, onSearchChange }) {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 shrink-0"
-            onClick={() => onSearchChange('')}
-          >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg tracking-tight hidden sm:block">
-              Waifu<span className="text-primary">Binge</span>
-            </span>
-          </Link>
+          <div className="flex items-center gap-8 shrink-0">
+            {/* Logo */}
+            <Link
+              to="/"
+              className="flex items-center gap-2"
+              onClick={() => onSearchChange('')}
+            >
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-bold text-lg tracking-tight hidden sm:block">
+                Waifu<span className="text-primary">Binge</span>
+              </span>
+            </Link>
+
+            {/* Navigation Links */}
+            <nav className="hidden md:flex items-center gap-5 text-sm font-semibold">
+               <Link 
+                  to="/anime" 
+                  className={cn("transition-colors hover:text-primary", location.pathname === "/anime" || (location.pathname.startsWith("/anime") && location.pathname !== "/") ? "text-foreground" : "text-muted-foreground")}
+               >
+                  Anime
+               </Link>
+               <Link 
+                  to="/manga" 
+                  className={cn("transition-colors hover:text-primary", location.pathname.startsWith("/manga") ? "text-foreground" : "text-muted-foreground")}
+               >
+                  Manga
+               </Link>
+            </nav>
+          </div>
 
           {/* Search Bar */}
           <form
@@ -62,12 +81,13 @@ function Navbar({ searchQuery, onSearchChange }) {
                 ref={inputRef}
                 id="search-anime"
                 type="search"
-                placeholder="Search anime..."
+                placeholder={location.pathname.startsWith('/manga') ? "Search manga..." : "Search anime..."}
                 value={searchQuery}
                 onChange={(e) => {
                   onSearchChange(e.target.value)
-                  if (location.pathname !== '/' && e.target.value.trim().length > 0) {
-                    navigate('/')
+                  const targetPath = location.pathname.startsWith('/manga') ? '/manga' : '/anime'
+                  if (location.pathname !== targetPath && e.target.value.trim().length > 0) {
+                    navigate(targetPath)
                   }
                 }}
                 onFocus={() => setIsFocused(true)}
