@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, Star, TrendingUp, Crown, PanelRightClose, PanelRightOpen } from 'lucide-react'
-import { fetchTopAnime } from '@/lib/api'
+import { fetchTopManga } from '@/lib/api'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 
-function useLeaderboard() {
+function useMangaLeaderboard() {
   return useQuery({
-    queryKey: ['leaderboard'],
-    queryFn: () => fetchTopAnime(1, 10),
+    queryKey: ['mangaLeaderboard'],
+    queryFn: () => fetchTopManga(1, 10),
     staleTime: 1000 * 60 * 10, // 10 minutes
   })
 }
@@ -54,9 +54,9 @@ function LeaderboardSkeleton() {
   )
 }
 
-export default function AnimeLeaderboard() {
-  const { data, isLoading, isError } = useLeaderboard()
-  const animeList = data?.data ?? []
+export default function MangaLeaderboard() {
+  const { data, isLoading, isError } = useMangaLeaderboard()
+  const mangaList = data?.data ?? []
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   if (isCollapsed) {
@@ -106,15 +106,15 @@ export default function AnimeLeaderboard() {
           <p className="text-xs text-muted-foreground text-center py-6">Failed to load leaderboard</p>
         ) : (
           <ol className="flex flex-col gap-1">
-            {animeList.map((anime, idx) => (
+            {mangaList.map((manga, idx) => (
               <motion.li
-                key={anime.mal_id}
+                key={manga.mal_id}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.04, duration: 0.3 }}
               >
                 <a
-                  href={anime.url}
+                  href={manga.url}
                   target="_blank"
                   rel="noreferrer"
                   className="
@@ -129,8 +129,8 @@ export default function AnimeLeaderboard() {
                   {/* Thumbnail */}
                   <div className="w-9 h-12 rounded overflow-hidden shrink-0 bg-muted border border-border">
                     <img
-                      src={anime.images?.webp?.small_image_url || anime.images?.jpg?.small_image_url}
-                      alt={anime.title}
+                      src={manga.images?.webp?.small_image_url || manga.images?.jpg?.small_image_url}
+                      alt={manga.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                     />
@@ -139,15 +139,15 @@ export default function AnimeLeaderboard() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
-                      {anime.title_english || anime.title}
+                      {manga.title_english || manga.title}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                       <Star className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
                       <span className="text-[10px] font-bold text-yellow-400">
-                        {anime.score?.toFixed(1) ?? 'N/A'}
+                        {manga.score?.toFixed(1) ?? 'N/A'}
                       </span>
                       <span className="text-[10px] text-muted-foreground ml-1">
-                        · {(anime.members / 1000).toFixed(0)}K
+                        · {(manga.members / 1000).toFixed(0)}K
                       </span>
                     </div>
                   </div>
@@ -157,6 +157,11 @@ export default function AnimeLeaderboard() {
           </ol>
         )}
       </div>
+
+      {/* Footer note */}
+      <p className="text-[10px] text-muted-foreground text-center mt-2 px-2">
+        Powered by Jikan · Updates every 10 min
+      </p>
     </aside>
   )
 }
