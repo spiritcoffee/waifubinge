@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useOutletContext } from 'react-router-dom
 import Layout from './Layout'
 import Home from './pages/Home'
 import Watchlist from './pages/Watchlist'
+import AnimeDetails from './pages/AnimeDetails'
 
 // Wrapper to pass searchQuery from Layout context into Home
 function HomeWithContext() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomeWithContext />} />
           <Route path="watchlist" element={<Watchlist />} />
+          <Route path="anime/:id" element={<AnimeDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

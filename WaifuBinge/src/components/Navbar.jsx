@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Bookmark, X, Menu, Tv, Sparkles } from 'lucide-react'
 import { useWatchlistStore } from '@/store/watchlistStore'
@@ -10,11 +10,15 @@ function Navbar({ searchQuery, onSearchChange }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { watchlist } = useWatchlistStore()
   const inputRef = useRef(null)
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
+    if (location.pathname !== '/' && searchQuery.trim().length > 0) {
+      navigate('/')
+    }
   }
 
   const clearSearch = () => {
@@ -60,10 +64,15 @@ function Navbar({ searchQuery, onSearchChange }) {
                 type="search"
                 placeholder="Search anime..."
                 value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
+                onChange={(e) => {
+                  onSearchChange(e.target.value)
+                  if (location.pathname !== '/' && e.target.value.trim().length > 0) {
+                    navigate('/')
+                  }
+                }}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full bg-transparent pl-9 pr-9 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                className="w-full bg-transparent pl-9 pr-9 py-2 text-sm text-foreground focus:outline-none"
               />
               <AnimatePresence>
                 {searchQuery && (

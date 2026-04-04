@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { Star, Tv, Bookmark, BookmarkCheck, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { useWatchlistStore } from '@/store/watchlistStore'
@@ -6,11 +7,13 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 function AnimeCard({ anime }) {
+  const navigate = useNavigate()
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlistStore()
   const inWatchlist = isInWatchlist(anime.mal_id)
 
   const handleWatchlist = (e) => {
     e.preventDefault()
+    e.stopPropagation()
     if (inWatchlist) {
       removeFromWatchlist(anime.mal_id)
       toast.info(`Removed "${anime.title}" from watchlist`, {
@@ -36,6 +39,7 @@ function AnimeCard({ anime }) {
 
   return (
     <motion.div
+      onClick={() => navigate(`/anime/${anime.mal_id}`)}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}

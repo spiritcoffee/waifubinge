@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchTopAnime, fetchAnimeByGenre } from '@/lib/api'
+import { fetchTopAnime, fetchAnimeByGenre, fetchAnimeById } from '@/lib/api'
 
 /**
  * Hook to fetch top anime
@@ -26,5 +26,18 @@ export function useAnimeByMood(genreIds, page = 1) {
     enabled: !!genreIds,
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
+  })
+}
+
+/**
+ * Hook to fetch anime by ID
+ * @param {number|string} id 
+ */
+export function useAnimeById(id) {
+  return useQuery({
+    queryKey: ['animeById', id],
+    queryFn: () => fetchAnimeById(id),
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
   })
 }
