@@ -1,11 +1,13 @@
+import { Flame, Smile, Frown, Heart, Coffee, Ghost, HelpCircle, Swords } from 'lucide-react'
+
 /**
  * Mood → Genre mapping
  * Jikan API genre IDs: https://api.jikan.moe/v4/genres/anime
  */
 export const MOOD_GENRES = {
   excited: {
-    label: '🔥 Excited',
-    emoji: '🔥',
+    label: 'Excited',
+    icon: Flame,
     name: 'Excited',
     description: 'High energy, hype action',
     genreIds: '1,2',   // Action, Adventure
@@ -15,8 +17,8 @@ export const MOOD_GENRES = {
     textColor: 'text-orange-400',
   },
   happy: {
-    label: '😄 Happy',
-    emoji: '😄',
+    label: 'Happy',
+    icon: Smile,
     name: 'Happy',
     description: 'Fun, uplifting comedy',
     genreIds: '4',     // Comedy
@@ -26,8 +28,8 @@ export const MOOD_GENRES = {
     textColor: 'text-yellow-400',
   },
   sad: {
-    label: '😢 Sad',
-    emoji: '😢',
+    label: 'Sad',
+    icon: Frown,
     name: 'Sad',
     description: 'Emotional, tear-jerking dramas',
     genreIds: '8',     // Drama
@@ -37,8 +39,8 @@ export const MOOD_GENRES = {
     textColor: 'text-blue-400',
   },
   romantic: {
-    label: '💕 Romantic',
-    emoji: '💕',
+    label: 'Romantic',
+    icon: Heart,
     name: 'Romantic',
     description: 'Love stories & romance',
     genreIds: '22',    // Romance
@@ -48,8 +50,8 @@ export const MOOD_GENRES = {
     textColor: 'text-pink-400',
   },
   chill: {
-    label: '😌 Chill',
-    emoji: '😌',
+    label: 'Chill',
+    icon: Coffee,
     name: 'Chill',
     description: 'Relaxing slice of life',
     genreIds: '36',    // Slice of Life
@@ -59,8 +61,8 @@ export const MOOD_GENRES = {
     textColor: 'text-green-400',
   },
   scared: {
-    label: '😱 Scared',
-    emoji: '😱',
+    label: 'Scared',
+    icon: Ghost,
     name: 'Scared',
     description: 'Horror & supernatural thrills',
     genreIds: '14',    // Horror
@@ -70,8 +72,8 @@ export const MOOD_GENRES = {
     textColor: 'text-purple-400',
   },
   curious: {
-    label: '🤔 Curious',
-    emoji: '🤔',
+    label: 'Curious',
+    icon: HelpCircle,
     name: 'Curious',
     description: 'Mind-bending sci-fi & mystery',
     genreIds: '7,24',  // Mystery, Sci-Fi
@@ -81,8 +83,8 @@ export const MOOD_GENRES = {
     textColor: 'text-cyan-400',
   },
   epic: {
-    label: '⚔️ Epic',
-    emoji: '⚔️',
+    label: 'Epic',
+    icon: Swords,
     name: 'Epic',
     description: 'Fantasy battles & grand adventures',
     genreIds: '10,2',  // Fantasy, Adventure

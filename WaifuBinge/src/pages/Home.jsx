@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, TrendingUp, AlertCircle, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Sparkles, TrendingUp, AlertCircle, RefreshCw, ChevronLeft, ChevronRight, Flame } from 'lucide-react'
 import AnimeCard from '@/components/AnimeCard'
 import MoodSelector from '@/components/MoodSelector'
 import { LoadingGrid } from '@/components/LoadingSkeleton'
@@ -112,8 +112,20 @@ function Home({ searchQuery }) {
   // Section heading
   const sectionTitle = useMemo(() => {
     if (isSearchMode) return `Search: "${searchQuery}"`
-    if (activeMood) return `${MOOD_GENRES[activeMood].emoji} ${MOOD_GENRES[activeMood].name} Vibes`
-    return '🔥 Top Anime'
+    if (activeMood) {
+      const Icon = MOOD_GENRES[activeMood].icon
+      return (
+        <span className="flex items-center gap-2">
+          <Icon className="w-5 h-5 icon-glow" />
+          {MOOD_GENRES[activeMood].name} Vibes
+        </span>
+      )
+    }
+    return (
+      <span className="flex items-center gap-2">
+        <Flame className="w-5 h-5 text-orange-500 icon-glow" /> Top Anime
+      </span>
+    )
   }, [isSearchMode, searchQuery, activeMood])
 
   return (
