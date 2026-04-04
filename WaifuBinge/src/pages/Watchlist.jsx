@@ -10,8 +10,23 @@ import { Link } from 'react-router-dom'
 function Watchlist() {
   const { watchlist, clearWatchlist } = useWatchlistStore()
 
-  const animeList = watchlist.filter((item) => item.mediaType === 'anime' || !item.mediaType)
-  const mangaList = watchlist.filter((item) => item.mediaType === 'manga')
+  const animeList = watchlist.filter((item) => {
+    if (item.mediaType === 'anime') return true
+    if (item.mediaType === 'manga') return false
+    // Legacy support: if missing mediaType, guess from Jikan API structure
+    if (item.chapters !== undefined || item.volumes !== undefined) return false
+    if (item.type && ['Manga', 'Novel', 'Light Novel', 'One-shot', 'Doujinshi', 'Manhwa', 'Manhua', 'OEL'].includes(item.type)) return false
+    return true
+  })
+
+  const mangaList = watchlist.filter((item) => {
+    if (item.mediaType === 'manga') return true
+    if (item.mediaType === 'anime') return false
+    // Legacy support: if missing mediaType, guess from Jikan API structure
+    if (item.chapters !== undefined || item.volumes !== undefined) return true
+    if (item.type && ['Manga', 'Novel', 'Light Novel', 'One-shot', 'Doujinshi', 'Manhwa', 'Manhua', 'OEL'].includes(item.type)) return true
+    return false
+  })
 
   const handleClearAll = () => {
     clearWatchlist()
