@@ -5,6 +5,7 @@ import AnimeCard from '@/components/AnimeCard'
 import MoodSelector from '@/components/MoodSelector'
 import { LoadingGrid } from '@/components/LoadingSkeleton'
 import { Button } from '@/components/ui/button'
+import AnimeLeaderboard from '@/components/AnimeLeaderboard'
 import { useTopAnime, useAnimeByMood } from '@/hooks/useAnime'
 import { useSearch } from '@/hooks/useSearch'
 import { MOOD_GENRES } from '@/lib/constants'
@@ -116,99 +117,107 @@ function Home({ searchQuery }) {
   }, [isSearchMode, searchQuery, activeMood])
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-10">
-      {/* Hero */}
-      {!isSearchMode && (
-        <motion.section
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center py-6"
-        >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            Mood-Powered Anime Discovery
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground mb-3">
-            Find Anime for{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              Your Mood
-            </span>
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Powered by the Jikan API · {(pagination?.items?.total ?? 0).toLocaleString()}+ titles
-          </p>
-        </motion.section>
-      )}
-
-      {/* Mood Selector */}
-      {!isSearchMode && (
-        <MoodSelector activeMood={activeMood} onMoodSelect={handleMoodChange} />
-      )}
-
-      {/* Results section */}
-      <section>
-        <div className="flex items-center gap-3 mb-5">
-          <TrendingUp className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-bold text-foreground">{sectionTitle}</h2>
-          {activeQuery.isLoading && (
-            <div className="ml-auto w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          )}
-        </div>
-
-        <AnimatePresence mode="wait">
-          {activeQuery.isLoading ? (
-            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <LoadingGrid count={24} />
-            </motion.div>
-          ) : activeQuery.isError ? (
-            <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <ErrorState
-                message={
-                  activeQuery.error?.response?.status === 429
-                    ? 'Rate limit hit — please wait a moment and try again.'
-                    : 'Failed to fetch anime. Check your connection.'
-                }
-                onRetry={activeQuery.refetch}
-              />
-            </motion.div>
-          ) : animeList.length === 0 ? (
-            <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <EmptyState message={`No anime found for "${searchQuery || activeMood}"`} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key={`${activeMood}-${searchQuery}-${page}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
+    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 xl:pr-0 py-8">
+      <div className="flex gap-5 items-start">
+        {/* Main content */}
+        <main className="flex-1 min-w-0 flex flex-col gap-10">
+          {/* Hero */}
+          {!isSearchMode && (
+            <motion.section
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center py-6"
             >
-              {animeList.map((anime, idx) => (
-                <motion.div
-                  key={anime.mal_id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(idx * 0.03, 0.5) }}
-                >
-                  <AnimeCard anime={anime} />
-                </motion.div>
-              ))}
-            </motion.div>
+              <div className="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
+                <Sparkles className="w-3.5 h-3.5" />
+                Mood-Powered Anime Discovery
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground mb-3">
+                Find Anime for{' '}
+                <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                  Your Mood
+                </span>
+              </h1>
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                Powered by the Jikan API · {(pagination?.items?.total ?? 0).toLocaleString()}+ titles
+              </p>
+            </motion.section>
           )}
-        </AnimatePresence>
 
-        {/* Pagination */}
-        {!activeQuery.isLoading && !activeQuery.isError && animeList.length > 0 && (
-          <Pagination
-            page={page}
-            totalPages={pagination?.last_visible_page ?? 1}
-            onPageChange={handlePageChange}
-          />
-        )}
-      </section>
-    </main>
+          {/* Mood Selector */}
+          {!isSearchMode && (
+            <MoodSelector activeMood={activeMood} onMoodSelect={handleMoodChange} />
+          )}
+
+          {/* Results section */}
+          <section>
+            <div className="flex items-center gap-3 mb-5">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              <h2 className="text-xl font-bold text-foreground">{sectionTitle}</h2>
+              {activeQuery.isLoading && (
+                <div className="ml-auto w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              )}
+            </div>
+
+            <AnimatePresence mode="wait">
+              {activeQuery.isLoading ? (
+                <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <LoadingGrid count={24} />
+                </motion.div>
+              ) : activeQuery.isError ? (
+                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <ErrorState
+                    message={
+                      activeQuery.error?.response?.status === 429
+                        ? 'Rate limit hit — please wait a moment and try again.'
+                        : 'Failed to fetch anime. Check your connection.'
+                    }
+                    onRetry={activeQuery.refetch}
+                  />
+                </motion.div>
+              ) : animeList.length === 0 ? (
+                <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <EmptyState message={`No anime found for "${searchQuery || activeMood}"`} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`${activeMood}-${searchQuery}-${page}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+                >
+                  {animeList.map((anime, idx) => (
+                    <motion.div
+                      key={anime.mal_id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: Math.min(idx * 0.03, 0.5) }}
+                    >
+                      <AnimeCard anime={anime} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Pagination */}
+            {!activeQuery.isLoading && !activeQuery.isError && animeList.length > 0 && (
+              <Pagination
+                page={page}
+                totalPages={pagination?.last_visible_page ?? 1}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </section>
+        </main>
+
+        {/* Right Sidebar — Leaderboard */}
+        <AnimeLeaderboard />
+      </div>
+    </div>
   )
 }
 

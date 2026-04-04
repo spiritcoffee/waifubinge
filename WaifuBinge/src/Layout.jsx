@@ -16,7 +16,7 @@ function Layout() {
 
       {/* Footer */}
       <footer className="border-t border-border py-6 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
+        <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
           <span>
             Built with ❤️ using{' '}
             <a
