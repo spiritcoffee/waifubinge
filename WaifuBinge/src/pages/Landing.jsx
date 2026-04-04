@@ -27,7 +27,7 @@ const Landing = () => {
         className="relative h-full cursor-pointer flex items-center justify-center group overflow-hidden"
         initial={{ flex: 1 }}
         animate={{ flex: hovered === 'anime' ? 1.5 : hovered === 'manga' ? 0.5 : 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, ease: "easeInOut" }}
         onMouseEnter={() => setHovered('anime')}
         onMouseLeave={() => setHovered(null)}
         onClick={() => navigate('/anime')}
@@ -39,10 +39,10 @@ const Landing = () => {
           onDragStart={handleDragStart}
           className="absolute inset-0 w-full h-full object-cover object-top origin-[center_20%]"
           animate={{
-            scale: hovered === 'anime' ? 1.2 : 1,
+            scale: hovered === 'anime' ? 1.05 : 1,
             filter: hovered === 'anime' ? 'brightness(0.9) saturate(1.2)' : hovered === 'manga' ? 'brightness(0.2) grayscale(0.5)' : 'brightness(0.6)'
           }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
         />
         
         {/* Overlay Gradients */}
@@ -53,10 +53,10 @@ const Landing = () => {
         <motion.div 
           className="relative z-10 flex flex-col items-center justify-center text-white p-4 text-center mt-[20vh]"
           animate={{
-            y: hovered === 'anime' ? -15 : 0,
-            scale: hovered === 'anime' ? 1.05 : 1
+            y: hovered === 'anime' ? -10 : 0,
+            scale: hovered === 'anime' ? 1.02 : 1
           }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           <div className="mb-6 p-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 transform transition-all duration-500 group-hover:scale-110 group-hover:bg-pink-500/20 group-hover:border-pink-500/50 shadow-[0_0_40px_rgba(236,72,153,0)] group-hover:shadow-[0_0_40px_rgba(236,72,153,0.3)]">
             <PlayCircle className="w-12 h-12 text-pink-400 group-hover:text-pink-300 transition-colors" />
@@ -68,8 +68,8 @@ const Landing = () => {
           <motion.div 
             className="mt-8 px-8 py-3 rounded-full border border-pink-500/30 bg-pink-500/10 backdrop-blur-md text-pink-100 font-bold uppercase tracking-widest text-sm shadow-xl"
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: hovered === 'anime' ? 1 : 0, y: hovered === 'anime' ? 0 : 15 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
+            animate={{ opacity: hovered === 'anime' ? 1 : 0, y: hovered === 'anime' ? 0 : 10 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             Explore Shows
           </motion.div>
@@ -81,7 +81,7 @@ const Landing = () => {
         className="relative h-full cursor-pointer flex items-center justify-center group overflow-hidden"
         initial={{ flex: 1 }}
         animate={{ flex: hovered === 'manga' ? 1.5 : hovered === 'anime' ? 0.5 : 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, ease: "easeInOut" }}
         onMouseEnter={() => setHovered('manga')}
         onMouseLeave={() => setHovered(null)}
         onClick={() => navigate('/manga')}
@@ -91,12 +91,12 @@ const Landing = () => {
           src={mangaBg}
           alt="Manga"
           onDragStart={handleDragStart}
-          className="absolute inset-0 w-full h-full object-cover object-top origin-[center_20%]"
+          className="absolute inset-0 w-full h-full object-cover object-[center_15%] origin-[center_15%]"
           animate={{
-            scale: hovered === 'manga' ? 1.2 : 1,
+            scale: hovered === 'manga' ? 1.05 : 1,
             filter: hovered === 'manga' ? 'brightness(0.9) saturate(1.2)' : hovered === 'anime' ? 'brightness(0.2) grayscale(0.5)' : 'brightness(0.6)'
           }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
         />
         
         {/* Overlay Gradients */}
@@ -107,10 +107,10 @@ const Landing = () => {
         <motion.div 
           className="relative z-10 flex flex-col items-center justify-center text-white p-4 text-center mt-[20vh]"
           animate={{
-            y: hovered === 'manga' ? -15 : 0,
-            scale: hovered === 'manga' ? 1.05 : 1
+            y: hovered === 'manga' ? -10 : 0,
+            scale: hovered === 'manga' ? 1.02 : 1
           }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           <div className="mb-6 p-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 transform transition-all duration-500 group-hover:scale-110 group-hover:bg-cyan-500/20 group-hover:border-cyan-500/50 shadow-[0_0_40px_rgba(6,182,212,0)] group-hover:shadow-[0_0_40px_rgba(6,182,212,0.3)]">
             <BookOpen className="w-12 h-12 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
@@ -122,8 +122,8 @@ const Landing = () => {
           <motion.div 
             className="mt-8 px-8 py-3 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-md text-cyan-100 font-bold uppercase tracking-widest text-sm shadow-xl"
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: hovered === 'manga' ? 1 : 0, y: hovered === 'manga' ? 0 : 15 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
+            animate={{ opacity: hovered === 'manga' ? 1 : 0, y: hovered === 'manga' ? 0 : 10 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             Read Chapters
           </motion.div>
