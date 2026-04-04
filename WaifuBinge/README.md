@@ -1,3 +1,5 @@
+### TEAM O(1) PRESENTS
+
 # WaifuBinge 🌸
 
 WaifuBinge is a modern, high-performance web application tailored for anime and manga enthusiasts. Explore top-ranked series, browse intricately categorized titles based on your current **Mood**, maintain personal watchlists/readlists, and seamlessly track live global leaderboards.
