@@ -2,12 +2,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Bookmark, Trash2, BookmarkX } from 'lucide-react'
 import { toast } from 'sonner'
 import AnimeCard from '@/components/AnimeCard'
+import MangaCard from '@/components/MangaCard'
 import { Button } from '@/components/ui/button'
 import { useWatchlistStore } from '@/store/watchlistStore'
 import { Link } from 'react-router-dom'
 
 function Watchlist() {
   const { watchlist, clearWatchlist } = useWatchlistStore()
+
+  const animeList = watchlist.filter((item) => item.mediaType === 'anime' || !item.mediaType)
+  const mangaList = watchlist.filter((item) => item.mediaType === 'manga')
 
   const handleClearAll = () => {
     clearWatchlist()
@@ -67,27 +71,59 @@ function Watchlist() {
             </Link>
           </motion.div>
         ) : (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
-          >
-            <AnimatePresence>
-              {watchlist.map((anime) => (
+          <div className="flex flex-col gap-12">
+            {animeList.length > 0 && (
+              <section>
+                <h2 className="text-xl font-bold text-foreground mb-4">Anime</h2>
                 <motion.div
-                  key={anime.mal_id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
                 >
-                  <AnimeCard anime={anime} />
+                  <AnimatePresence>
+                    {animeList.map((anime) => (
+                      <motion.div
+                        key={`anime-${anime.mal_id}`}
+                        layout
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <AnimeCard anime={anime} />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+              </section>
+            )}
+
+            {mangaList.length > 0 && (
+              <section>
+                <h2 className="text-xl font-bold text-foreground mb-4">Manga</h2>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
+                >
+                  <AnimatePresence>
+                    {mangaList.map((manga) => (
+                      <motion.div
+                        key={`manga-${manga.mal_id}`}
+                        layout
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <MangaCard manga={manga} />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              </section>
+            )}
+          </div>
         )}
       </AnimatePresence>
     </main>

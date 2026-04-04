@@ -6,21 +6,22 @@ export const useWatchlistStore = create(
     (set, get) => ({
       watchlist: [],
 
-      addToWatchlist: (anime) => {
-        const exists = get().watchlist.find((a) => a.mal_id === anime.mal_id)
+      addToWatchlist: (item, type = 'anime') => {
+        const itemWithType = { ...item, mediaType: type }
+        const exists = get().watchlist.find((a) => a.mal_id === item.mal_id && (a.mediaType === type || (!a.mediaType && type === 'anime')))
         if (!exists) {
-          set((state) => ({ watchlist: [...state.watchlist, anime] }))
+          set((state) => ({ watchlist: [...state.watchlist, itemWithType] }))
         }
       },
 
-      removeFromWatchlist: (mal_id) => {
+      removeFromWatchlist: (mal_id, type = 'anime') => {
         set((state) => ({
-          watchlist: state.watchlist.filter((a) => a.mal_id !== mal_id),
+          watchlist: state.watchlist.filter((a) => !(a.mal_id === mal_id && (a.mediaType === type || (!a.mediaType && type === 'anime')))),
         }))
       },
 
-      isInWatchlist: (mal_id) => {
-        return get().watchlist.some((a) => a.mal_id === mal_id)
+      isInWatchlist: (mal_id, type = 'anime') => {
+        return get().watchlist.some((a) => a.mal_id === mal_id && (a.mediaType === type || (!a.mediaType && type === 'anime')))
       },
 
       clearWatchlist: () => set({ watchlist: [] }),

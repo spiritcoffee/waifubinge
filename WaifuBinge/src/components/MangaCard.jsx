@@ -9,18 +9,18 @@ import { cn } from '@/lib/utils'
 function MangaCard({ manga }) {
   const navigate = useNavigate()
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlistStore()
-  const inWatchlist = isInWatchlist(manga.mal_id)
+  const inWatchlist = isInWatchlist(manga.mal_id, 'manga')
 
   const handleWatchlist = (e) => {
     e.preventDefault()
     e.stopPropagation()
     if (inWatchlist) {
-      removeFromWatchlist(manga.mal_id)
+      removeFromWatchlist(manga.mal_id, 'manga')
       toast.info(`Removed "${manga.title}" from watchlist`, {
         icon: '🗑️',
       })
     } else {
-      addToWatchlist(manga)
+      addToWatchlist(manga, 'manga')
       toast.success(`Added "${manga.title}" to watchlist!`, {
         icon: '✅',
       })

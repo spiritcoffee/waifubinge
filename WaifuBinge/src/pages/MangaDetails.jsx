@@ -52,14 +52,14 @@ function MangaDetails() {
   }
 
   const manga = data.data
-  const inWatchlist = isInWatchlist(manga.mal_id)
+  const inWatchlist = isInWatchlist(manga.mal_id, 'manga')
 
   const handleWatchlist = () => {
     if (inWatchlist) {
-      removeFromWatchlist(manga.mal_id)
+      removeFromWatchlist(manga.mal_id, 'manga')
       toast.info(`Removed "${manga.title}" from watchlist`, { icon: '🗑️' })
     } else {
-      addToWatchlist(manga)
+      addToWatchlist(manga, 'manga')
       toast.success(`Added "${manga.title}" to watchlist!`, { icon: '✅' })
     }
   }
