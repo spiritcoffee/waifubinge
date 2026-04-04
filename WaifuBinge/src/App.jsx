@@ -1,8 +1,11 @@
 import { BrowserRouter, Routes, Route, useOutletContext } from 'react-router-dom'
 import Layout from './Layout'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
+import Manga from './pages/Manga'
 import Watchlist from './pages/Watchlist'
 import AnimeDetails from './pages/AnimeDetails'
+import MangaDetails from './pages/MangaDetails'
 
 // Wrapper to pass searchQuery from Layout context into Home
 function HomeWithContext() {
@@ -10,14 +13,22 @@ function HomeWithContext() {
   return <Home searchQuery={searchQuery} />
 }
 
+function MangaWithContext() {
+  const { searchQuery } = useOutletContext()
+  return <Manga searchQuery={searchQuery} />
+}
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomeWithContext />} />
-          <Route path="watchlist" element={<Watchlist />} />
-          <Route path="anime/:id" element={<AnimeDetails />} />
+        <Route path="/" element={<Landing />} />
+        <Route element={<Layout />}>
+          <Route path="/anime" element={<HomeWithContext />} />
+          <Route path="/anime/:id" element={<AnimeDetails />} />
+          <Route path="/manga" element={<MangaWithContext />} />
+          <Route path="/manga/:id" element={<MangaDetails />} />
+          <Route path="/watchlist" element={<Watchlist />} />
         </Route>
       </Routes>
     </BrowserRouter>
