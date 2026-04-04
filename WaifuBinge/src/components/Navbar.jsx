@@ -80,7 +80,7 @@ function Navbar({ searchQuery, onSearchChange }) {
               <input
                 ref={inputRef}
                 id="search-anime"
-                type="search"
+                type="text"
                 placeholder={location.pathname.startsWith('/manga') ? "Search manga..." : "Search anime..."}
                 value={searchQuery}
                 onChange={(e) => {
